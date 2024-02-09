@@ -27,7 +27,7 @@ function addBooksList() {
     this.id = +new Date();
     this.name = name;
     this.author = author;
-    this.year = year;
+    this.year = parseInt(year);
     this.isComplete = isComplete;
   }
 
