@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <!-- MyStyle -->
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="nav-logo">
+          <h1 class="text-logo">Bookself</h1>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        <section class="left">
+          <div class="search">
+            <h3>Cari Buku</h3>
+            <form id="searchBook">
+              <input type="search" id="inputSearch" placeholder="Nama Buku Yang Ingin Dicari" />
+              <button type="submit" id="searchSubmit">Cari</button>
+            </form>
+          </div>
+
+          <div class="input">
+            <h2>Masukan Buku Baru</h2>
+            <form id="inputBook">
+              <input type="text" maxlength="10" placeholder="Nama Buku" id="inputJudul" required />
+              <input type="text" maxlength="15" placeholder="Nama Penulis" id="inputPenulis" required />
+              <input type="number" maxlength="15" id="inputTanggal" placeholder="Tahun Terbit" required />
+              <div class="check">
+                <label for="inputChecbox">Selesai Dibaca ?</label>
+                <input type="checkbox" id="inputChecbox" />
+              </div>
+              <button id="bookSubmit" type="submit">Masukan Buku</button>
+            </form>
+          </div>
+        </section>
+
+        <section class="right">
+          <div class="resume">
+            <div class="head">
+              <h3>Belum Selesai Dibaca</h3>
+            </div>
+            <div class="body"></div>
+          </div>
+
+          <div class="complete">
+            <div class="head">
+              <h3>Selesai Dibaca</h3>
+            </div>
+            <div class="body"></div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- MyScript -->
+    <script src="js/script.js"></script>
+  </body>
+  <footer>&copy; Copyright Mahludin 2024</footer>
+</html>

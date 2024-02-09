@@ -1,0 +1,257 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+header {
+  position: relative;
+}
+
+nav {
+  background-color: rgb(30, 66, 114);
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 0.6rem;
+  color: #fff;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 85px;
+}
+
+nav .nav-logo {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+}
+
+nav .nav-logo .text-logo span {
+  display: block;
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin: 3rem 8rem;
+}
+
+.left {
+  flex-basis: 50%;
+}
+
+.left .search {
+  padding-bottom: 3rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.left .search h3 {
+  font-size: 1.4rem;
+  padding-bottom: 0.8rem;
+}
+
+.left .search form {
+  display: flex;
+  flex-direction: column;
+}
+
+.left .search form input,
+.left .input form input {
+  padding: 0.6rem;
+  margin: 0.3rem 0;
+}
+
+.left .input .check {
+  font-size: 1.1rem;
+  padding: 0.2rem 0 0.5rem 0;
+  display: flex;
+  align-items: center;
+}
+
+.left .input .check input {
+  width: 2rem;
+  height: 1.3rem;
+  accent-color: green;
+  margin-left: 10px;
+}
+
+.left .search form button,
+.left .input form button {
+  padding: 0.5rem;
+  border-radius: 6px;
+  background-color: #4d7de6;
+  color: #fff;
+  font-size: 0.9rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.left .search button:hover,
+.left .input form button:hover {
+  background-color: #2255c2;
+}
+
+.left .input form {
+  display: flex;
+  flex-direction: column;
+  padding: 0.8rem 0;
+}
+
+.right {
+  flex-basis: 50%;
+}
+
+.right .resume,
+.right .complete {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  padding: 0.8rem;
+  min-height: 200px;
+  margin: 0.5rem 0;
+}
+
+.right .resume .head h3,
+.right .complete .head h3 {
+  font-size: 1.6rem;
+}
+
+.body {
+  margin-top: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  max-height: 325px;
+  overflow: auto;
+}
+
+.body .body-item {
+  border: 2px solid rgba(0, 0, 0, 0.3);
+  width: 48%;
+  padding: 0.5rem;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.body .body-item h4 {
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+  color: #4d7de6;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.body .body-item p {
+  font-size: 1.2rem;
+}
+
+.body .body-item .button-action {
+  padding: 0.5rem 0;
+}
+
+.body .body-item .button-action .move-book,
+.body .body-item .button-action .delete-book {
+  padding: 0.5rem;
+  border-radius: 6px;
+  color: #fff;
+  transition: all 0.3s ease-in-out;
+}
+
+.body .body-item .button-action .move-book {
+  background-color: green;
+}
+
+.body .body-item .button-action .move-book:hover {
+  background-color: rgb(2, 75, 2);
+}
+
+.body .body-item .button-action .delete-book {
+  background-color: red;
+}
+
+.body .body-item .button-action .delete-book:hover {
+  background-color: rgb(153, 42, 2);
+}
+
+footer {
+  text-align: center;
+  padding: 3rem;
+  color: #fff;
+  font-size: 1.3rem;
+  background-color: rgb(30, 66, 114);
+  border-top: 3px solid rgba(0, 0, 0, 0.5);
+}
+
+@media screen and (max-width: 1200px) {
+  .body .body-item {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  nav {
+    padding: 1rem;
+    position: static;
+    width: 100%;
+  }
+
+  nav .nav-logo .text-logo span {
+    display: inline;
+  }
+
+  .container {
+    height: max-content;
+    flex-wrap: wrap;
+    margin: 3rem 4rem;
+  }
+
+  .left {
+    flex-basis: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .left .search {
+    order: 2;
+    padding-bottom: 0;
+  }
+
+  .left .input {
+    order: 1;
+    padding: 3rem 0 1.5rem 0;
+  }
+
+  .right {
+    flex-basis: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .right .resume,
+  .right .complete {
+    flex-basis: 50%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    margin: 3rem 3rem;
+  }
+
+  .right {
+    flex-wrap: wrap;
+  }
+
+  .right .resume,
+  .right .complete {
+    flex-basis: 100%;
+  }
+}
