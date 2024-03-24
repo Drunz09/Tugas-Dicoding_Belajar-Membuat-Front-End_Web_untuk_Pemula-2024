@@ -20,6 +20,7 @@ nav {
   bottom: 0;
   left: 0;
   width: 85px;
+  border-right: 3px solid rgba(0, 0, 0, 0.5);
 }
 
 nav .nav-logo {
@@ -60,19 +61,41 @@ nav .nav-logo .text-logo span {
 }
 
 .left .search form input,
-.left .input form input {
+.left .input form input,
+.edit form input {
   padding: 0.6rem;
   margin: 0.3rem 0;
 }
 
-.left .input .check {
+.edit form input:last-child {
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 6px;
+  background-color: #4d7de6;
+  color: #fff;
+  font-size: 0.9rem;
+  transition: all 0.3s ease-in-out;
+  border: none;
+}
+
+.edit form input:last-child:hover {
+  background-color: #2255c2;
+}
+
+.left .input .check,
+.edit form .check {
   font-size: 1.1rem;
   padding: 0.2rem 0 0.5rem 0;
   display: flex;
   align-items: center;
 }
 
-.left .input .check input {
+.edit form .check {
+  color: #fff;
+}
+
+.left .input .check input,
+.edit form .check input {
   width: 2rem;
   height: 1.3rem;
   accent-color: green;
@@ -80,7 +103,8 @@ nav .nav-logo .text-logo span {
 }
 
 .left .search form button,
-.left .input form button {
+.left .input form button,
+.edit form button {
   padding: 0.5rem;
   border-radius: 6px;
   background-color: #4d7de6;
@@ -89,8 +113,13 @@ nav .nav-logo .text-logo span {
   transition: all 0.3s ease-in-out;
 }
 
+.edit form button {
+  border: none;
+}
+
 .left .search button:hover,
-.left .input form button:hover {
+.left .input form button:hover,
+.edit form button:hover {
   background-color: #2255c2;
 }
 
@@ -125,7 +154,7 @@ nav .nav-logo .text-logo span {
   justify-content: center;
   flex-wrap: wrap;
   gap: 1rem;
-  max-height: 325px;
+  max-height: 350px;
   overflow: auto;
 }
 
@@ -153,15 +182,25 @@ nav .nav-logo .text-logo span {
 }
 
 .body .body-item .button-action {
-  padding: 0.5rem 0;
+  padding: 0.8rem 0;
 }
 
 .body .body-item .button-action .move-book,
-.body .body-item .button-action .delete-book {
-  padding: 0.5rem;
+.body .body-item .button-action .delete-book,
+.body .body-item .button-action .edit-book {
+  padding: 0.5rem 0.8rem;
   border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
   color: #fff;
   transition: all 0.3s ease-in-out;
+  text-align: center;
+  margin: 0 0.1rem;
+}
+
+.body .body-item .button-action .move-book i,
+.body .body-item .button-action .delete-book i,
+.body .body-item .button-action .edit-book i {
+  font-size: 1.1rem;
 }
 
 .body .body-item .button-action .move-book {
@@ -169,7 +208,7 @@ nav .nav-logo .text-logo span {
 }
 
 .body .body-item .button-action .move-book:hover {
-  background-color: rgb(2, 75, 2);
+  background-color: darkgreen;
 }
 
 .body .body-item .button-action .delete-book {
@@ -177,7 +216,52 @@ nav .nav-logo .text-logo span {
 }
 
 .body .body-item .button-action .delete-book:hover {
-  background-color: rgb(153, 42, 2);
+  background-color: darkred;
+}
+
+.body .body-item .button-action .edit-book {
+  background-color: orange;
+}
+
+.body .body-item .button-action .edit-book:hover {
+  background-color: darkgoldenrod;
+}
+
+.edit {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 50vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(30, 66, 114);
+  border-left: 3px solid rgba(0, 0, 0, 0.5);
+  transform: translateX(180%);
+  transition: all 0.5s ease-in;
+}
+
+.edit.active {
+  transform: translateX(0);
+}
+
+.edit h3 {
+  margin: 1rem 0;
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.edit form {
+  display: flex;
+  flex-direction: column;
+  padding: 0 1rem;
+  gap: 0.5rem;
+  width: 100%;
 }
 
 footer {

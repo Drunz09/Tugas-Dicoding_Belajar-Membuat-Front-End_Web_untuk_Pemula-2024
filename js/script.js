@@ -106,51 +106,69 @@ function putElement(parE) {
   classItem.append(Bookname, Author, Year);
 
   if (parE.isComplete == false) {
+    // Move Book Event
     const moveBook = document.createElement("button");
     moveBook.classList.add("move-book");
-    moveBook.innerText = "Selesai";
+    moveBook.innerHTML = `<i class='bx bx-check'></i>`;
 
-    // Move Book Event
     moveBook.addEventListener("click", () => {
       moveBookStatus(parE.id);
     });
 
+    // Delete Book Event
     const trashBook = document.createElement("button");
     trashBook.classList.add("delete-book");
-    trashBook.innerText = "Hapus";
+    trashBook.innerHTML = `<i class='bx bxs-trash'></i>`;
 
-    // Delete Book Event
     trashBook.addEventListener("click", () => {
       deleteBookStatus(parE.id);
     });
 
+    // Edit Book Event
+    const editBook = document.createElement("button");
+    editBook.classList.add("edit-book");
+    editBook.innerHTML = `<i class='bx bx-edit' ></i>`;
+
+    editBook.addEventListener("click", () => {
+      editBookStatus(parE.id);
+    });
+
     const buttonclass = document.createElement("div");
     buttonclass.classList.add("button-action");
-    buttonclass.append(moveBook, trashBook);
+    buttonclass.append(moveBook, trashBook, editBook);
 
     classItem.append(buttonclass);
   } else {
+    // Move Book Event
     const moveBook = document.createElement("button");
     moveBook.classList.add("move-book");
-    moveBook.innerText = "Belum Selesai";
+    moveBook.innerHTML = `<i class='bx bx-x'></i>`;
 
-    // Move Book Event
     moveBook.addEventListener("click", () => {
       moveBookStatus(parE.id);
     });
 
+    // Delete Book Event
     const trashBook = document.createElement("button");
     trashBook.classList.add("delete-book");
-    trashBook.innerText = "Hapus";
+    trashBook.innerHTML = `<i class='bx bxs-trash'></i>`;
 
-    // Delete Book Event
     trashBook.addEventListener("click", () => {
       deleteBookStatus(parE.id);
     });
 
+    // Edit Book Event
+    const editBook = document.createElement("button");
+    editBook.classList.add("edit-book");
+    editBook.innerHTML = `<i class='bx bx-edit' ></i>`;
+
+    editBook.addEventListener("click", () => {
+      editBookStatus(parE.id);
+    });
+
     const buttonclass = document.createElement("div");
     buttonclass.classList.add("button-action");
-    buttonclass.append(moveBook, trashBook);
+    buttonclass.append(moveBook, trashBook, editBook);
 
     classItem.append(buttonclass);
   }
@@ -160,16 +178,26 @@ function putElement(parE) {
 
 // Show Books - Move Book
 function moveBookStatus(bookid) {
-  const conf = confirm("Apakah Buku telah selesai dibaca ?");
   const idBooks = findbook(bookid);
 
-  if (conf == true) {
-    idBooks.isComplete = !idBooks.isComplete;
-    document.dispatchEvent(new Event(book_event));
-    saveData();
-  } else if (conf == false || idBooks == null) {
-    return;
-  }
+  swal
+    .fire({
+      title: "Pindahkan!",
+      text: "Apakah buku ingin dipindahkan ?",
+      showDenyButton: true,
+      confirmButtonText: "Iya",
+      denyButtonText: `Tidak`,
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Saved!", "", "success");
+        idBooks.isComplete = !idBooks.isComplete;
+        document.dispatchEvent(new Event(book_event));
+        saveData();
+      } else if (result.isDenied || idBooks == null) {
+        Swal.fire("Buku tidak jadi dipindahkan", "", "info");
+      }
+    });
 }
 
 // Show Books - findID
@@ -184,17 +212,25 @@ function findbook(bookid) {
 
 // Show Books - Delete Book
 function deleteBookStatus(bookid) {
-  const conf = confirm("Hapus Buku ?");
   const idBooks = findbookIndex(bookid);
-
-  if (conf == true) {
-    booklist.splice(idBooks, 1);
-    alert("Buku Telah Dihapus");
-    document.dispatchEvent(new Event(book_event));
-    saveData();
-  } else if (conf == false || idBooks === -1) {
-    return;
-  }
+  swal
+    .fire({
+      title: "Hapus Buku!",
+      text: "Apakah buku ingin dihapus ?",
+      showDenyButton: true,
+      confirmButtonText: "Iya",
+      denyButtonText: `Tidak`,
+    })
+    .then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Saved!", "", "success");
+        booklist.splice(idBooks, 1);
+        document.dispatchEvent(new Event(book_event));
+        saveData();
+      } else if (result.isDenied || idBooks === -1) {
+        Swal.fire("Buku tidak jadi dihapus", "", "info");
+      }
+    });
 }
 
 // Show Books - findID from index
@@ -204,6 +240,67 @@ function findbookIndex(bookid) {
       return i;
     }
   }
+}
+
+// Show Books - edit Book
+function editBookStatus(bookId) {
+  const idBooks = findbook(bookId);
+
+  const bookComplete = idBooks.isComplete == true ? "checked" : "";
+  const editForm = document.querySelector(".edit");
+  editForm.classList.add("active");
+
+  editForm.innerHTML = `
+  <h3>Edit Buku</h3>
+          <form id="editBooks">
+            <input type="text" maxlength="10" value="${idBooks.name}" id="inputEditJudul" required />
+            <input type="text" maxlength="15" value="${idBooks.author}" id="inputEditPenulis" required />
+            <input type="number" maxlength="15" id="inputEditTanggal" value="${idBooks.year}" required />
+            <div class="check">
+              <label for="inputChecbox">Selesai Dibaca ?</label>
+              <input type="checkbox" id="inputEditChecbox"  ${bookComplete}  />
+            </div>
+            <button id="EditbookSubmit" type="submit">Edit Buku</button>
+            <input type="button" onclick="closeForm()" value="Tidak Jadi" />
+          </form>
+          `;
+
+  document.querySelector("#editBooks").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const editName = document.querySelector("#inputEditJudul").value;
+    const editAuthor = document.querySelector("#inputEditPenulis").value;
+    const editYear = document.querySelector("#inputEditTanggal").value;
+    const editChecked = document.querySelector("#inputEditChecbox").checked;
+
+    swal
+      .fire({
+        title: "Edit Buku!",
+        text: "Apakah buku telah selesai diedit?",
+        showDenyButton: true,
+        confirmButtonText: "Iya",
+        denyButtonText: `Tidak`,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire("Saved!", "", "success");
+          idBooks.name = editName;
+          idBooks.author = editAuthor;
+          idBooks.year = parseInt(editYear);
+          idBooks.isComplete = editChecked;
+          editForm.classList.remove("active");
+          document.dispatchEvent(new Event(book_event));
+          saveData();
+        } else if (result.isDenied) {
+          Swal.fire("Silahkan edit terlebih dahulu", "", "info");
+        }
+      });
+  });
+}
+
+// Show Books - edit Book_Close Form
+function closeForm() {
+  const editForm = document.querySelector(".edit");
+  editForm.classList.remove("active");
 }
 
 // Search
@@ -238,8 +335,10 @@ function searchBooks() {
       <p>${e.author}</p>
       <p>${e.year}</p>
       <div class="button-action">
-          <button class="move-book" onclick="moveBookStatus(${e.id})">Selesai</button>
-          <button class="delete-book" onclick="deleteBookStatus(${e.id})">Hapus</button>
+          <button class="move-book" onclick="moveBookStatus(${e.id})"><i class='bx bx-check'></i></button>
+          <button class="delete-book" onclick="deleteBookStatus(${e.id})"><i class='bx bxs-trash'></i></button>
+          <button class="edit-book" onclick="editBookStatus(${e.id})"><i class='bx bx-edit' ></i></button>
+          
       </div>
       </div>`;
 
@@ -251,8 +350,9 @@ function searchBooks() {
       <p>${e.author}</p>
       <p>${e.year}</p>
       <div class="button-action">
-          <button class="move-book" onclick="moveBookStatus(${e.id})">Selesai</button>
-          <button class="delete-book" onclick="deleteBookStatus(${e.id})">Hapus</button>
+          <button class="move-book" onclick="moveBookStatus(${e.id})"><i class='bx bx-x'></i></button>
+          <button class="delete-book" onclick="deleteBookStatus(${e.id})"><i class='bx bxs-trash'></i></button>
+          <button class="edit-book" onclick="editBookStatus(${e.id})"><i class='bx bx-edit' ></i></button>
       </div>
       </div>`;
 
